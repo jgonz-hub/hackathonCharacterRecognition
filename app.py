@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 
 app = Flask(__name__, static_url_path='/static')
-UPLOAD_FOLDER = os.path.join(os.getcwd(), 'hackathonCharacterRecognition\\uploads')
+UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
 ALLOWED_EXTENSIONS = {'jpg'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
