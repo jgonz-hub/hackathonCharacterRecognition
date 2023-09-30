@@ -5,8 +5,9 @@
         <title>character Recognition Result</title>
     </head>
     <body>
+
         <h1> And the Results are:...</h1>
         <p>Detected Character: {{ detected_character }}</p>
-        <img src="{{url_for('static', filename=filename) }}" alt="Uploaded image">
+        <img src="{{url_for('uploaded_file', filename=filename) }}" alt="Uploaded image">
     </body>
 </html>

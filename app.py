@@ -1,9 +1,9 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 
 app = Flask(__name__, static_url_path='/static')
-UPLOAD_FOLDER = 'uploads'
-ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif'}
+UPLOAD_FOLDER = os.path.join(os.getcwd(), 'hackathonCharacterRecognition\\uploads')
+ALLOWED_EXTENSIONS = {'jpg'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -32,7 +32,7 @@ def index():
             # Perform image recognition here (not implemented in this example)
 
             # Redirect to the result page with the image filename
-            return redirect(url_for('result', filename=file.filename))
+            return redirect(url_for('result_loader', filename=file.filename))
 
     return render_template('index.html')
 
@@ -45,6 +45,13 @@ def result(filename):
 
     return render_template('result.html', filename=filename, detected_character=detected_character)
 
+@app.route('/result_loader/<filename>')
+def result_loader(filename):
+    return render_template('result_loader.html', filename=filename)
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 if __name__ == '__main__':
     app.run(debug=True)

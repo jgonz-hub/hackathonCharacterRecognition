@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Loading...</title>
+    <!-- Add your CSS for the centered rotating custom loader here -->
+    <style>
+        .custom-loader-container {
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100vh; /* Make the container take the full height of the viewport */
+        }
+
+        .custom-loader {
+            width: 100px;
+            height: 100px;
+            animation: rotate 2s linear infinite;
+            /* Add any other styles you need */
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1>A Few Hours Later</h1>
+    <div class="custom-loader-container">
+        <img src="{{ url_for('static', filename='pineapple.jpg') }}" alt="Custom Loader" class="custom-loader">
+    </div>
+    <script>
+        // Simulate a delay (replace this with your actual loading logic)
+        setTimeout(function() {
+            // Redirect the user to the results page
+            window.location.href = "{{ url_for('result', filename=filename) }}";
+        }, 5000); // Simulated 2-second delay
+    </script>
+</body>
+</html>
