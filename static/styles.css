@@ -1,0 +1,31 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #FFD700 50%, #FF6B6B 50%),
+                linear-gradient(to bottom, transparent 80%, #8B4513 80%, #8B4513 90%, #FFF 90%, #FFF 91%, #8B4513 91%, #8B4513 100%),
+                linear-gradient(to bottom, transparent 80%, #3E4347 80%, #3E4347 85%, #FF6B6B 85%, #FF6B6B 90%, #3E4347 90% 95%, #FF6B6B 95% 100%);
+    background-size: 100% 100%, 50% 100%, 50% 100%;
+    background-position: left top, left bottom, right bottom;
+    text-align: center;
+    padding: 50px 0;
+}
+
+/* div holding everything */
+.container {
+    background-color: #FFF;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+/* div holding upload area button and input */
+.upload-area {
+    margin-top: 20px;
+}
+
+/* div holding display image */
+.image-display img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-top: 20px;
+}

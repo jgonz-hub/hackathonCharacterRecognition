@@ -3,12 +3,16 @@
     <head>
         <meta charset="UTF-8">
         <title> Character Recognition</title>
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles.css') }}">
     </head>
     <body>
-        <h1>Is this Spongebob or Patrick</h1>
-        <form method="POST" enctype="multipart/form-data">
-            <input type="file" name="file" accept=".jpg">
-            <input type="submit" value="Upload">
-        </form>
+        <div id="wrapper">
+            <h1 id="h1_title">Is this Spongebob or Patrick</h1>
+            <form method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" accept=".jpg">
+                <input type="submit" value="Upload">
+            </form>
+        </div>
+      
     </body>
 </html>
