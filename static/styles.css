@@ -25,6 +25,7 @@ body {
     position: absolute;
     bottom: 0;
     width: 100%;
+    border: 5px solid white;
 
 
     
@@ -53,10 +54,11 @@ font-weight: bold;
     cursor: pointer;
     }
 
-    #h1_title {
+    h1 {
         color: #2ad4de;
         word-spacing: 0.1rem;
         letter-spacing: 0.05rem;
+        font-size:3.5rem
         }
 
 /* div holding everything */
@@ -65,7 +67,7 @@ font-weight: bold;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
+    max-width: 44%;
     margin: 0 auto;
 }
 /* div holding upload area button and input */
@@ -93,6 +95,16 @@ font-weight: bold;
   
   .upload-btn:hover {
     background-color: #2980b9;
+  }
+
+  #img_input {
+    border-radius: 5px;
+    border: 2px solid white;
+  }
+  p{
+    color: white;
+    font-weight: bolder;
+    font-size: 2rem;
   }
   
   

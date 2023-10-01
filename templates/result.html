@@ -2,12 +2,14 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles.css') }}">
         <title>character Recognition Result</title>
     </head>
     <body>
 
         <h1> And the Results are:...</h1>
         <p>Detected Character: {{ detected_character }}</p>
-        <img src="{{url_for('uploaded_file', filename=filename) }}" alt="Uploaded image">
+        <img id="img_input" src="{{url_for('uploaded_file', filename=filename) }}" alt="Uploaded image">
     </body>
 </html>
