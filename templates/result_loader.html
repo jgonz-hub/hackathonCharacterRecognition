@@ -26,16 +26,24 @@
     </style>
 </head>
 <body>
-    <h1>A Few Hours Later</h1>
+    <!-- Add the audio element for playing the MP4 audio file -->
+    <audio id="myAudio" autoplay>
+        <source src="{{ url_for('static', filename='twohourslater.mp4') }}" type="video/mp4">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Add the custom loader container -->
     <div class="custom-loader-container">
         <img src="{{ url_for('static', filename='pineapple.jpg') }}" alt="Custom Loader" class="custom-loader">
     </div>
+
+    <!-- Add your JavaScript to redirect to the results page after a delay -->
     <script>
         // Simulate a delay (replace this with your actual loading logic)
         setTimeout(function() {
             // Redirect the user to the results page
             window.location.href = "{{ url_for('result', filename=filename) }}";
-        }, 5000); // Simulated 2-second delay
+        }, 2500); // Simulated 2-second delay
     </script>
 </body>
 </html>
