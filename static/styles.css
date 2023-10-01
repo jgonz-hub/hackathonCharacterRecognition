@@ -3,7 +3,7 @@
  body, html {
     height: 100vh;
     margin: 0;
-    padding: 50px 0 0 0;
+    padding: 1rem 0 0 0;
 }
 
 body {
@@ -26,6 +26,7 @@ body {
     bottom: 0;
     width: 100%;
     border: 5px solid white;
+    min-height: 10rem;
 
 
     
@@ -38,7 +39,6 @@ background-image: url(/static/resources/patrick_pants.jpg);
 }
 #div_pants *{
     width: 50%;
-    min-height: 20rem;
 }
 #form_container input{
 background-color: #28c7d0;
@@ -58,7 +58,7 @@ font-weight: bold;
         color: #2ad4de;
         word-spacing: 0.1rem;
         letter-spacing: 0.05rem;
-        font-size:3.5rem
+        font-size:2.5rem
         }
 
 /* div holding everything */
@@ -68,7 +68,7 @@ font-weight: bold;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 44%;
-    margin: 0 auto;
+    margin: 1rem auto;
 }
 /* div holding upload area button and input */
 .upload-area {
