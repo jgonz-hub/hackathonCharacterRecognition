@@ -1,3 +1,11 @@
+ 
+ /* Add CSS styles here for better control */
+ body, html {
+    height: 100vh;
+    margin: 0;
+    padding: 50px 0 0 0;
+}
+
 body {
     font-family: 'Arial', sans-serif;
     background: linear-gradient(to right, #FFD700 50%, #FF6B6B 50%),
@@ -6,11 +14,53 @@ body {
     background-size: 100% 100%, 50% 100%, 50% 100%;
     background-position: left top, left bottom, right bottom;
     text-align: center;
-    padding: 50px 0;
 }
 
+#wrapper {
+    min-height: 100%;
+}
+#div_pants {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
+
+    
+}
+#div_pants #div_sbobPants{
+background-image: url(/static/resources/sponge_bob_pantsResize.png);
+}
+#div_pants #div_pckShorts{
+background-image: url(/static/resources/patrick_pants.jpg);
+}
+#div_pants *{
+    width: 50%;
+    min-height: 20rem;
+}
+#form_container input{
+background-color: #28c7d0;
+color: #FFF;
+border-radius: 5px;
+padding: 1%;
+font-weight: bold;
+
+}
+#form_container input:hover {
+    background-color: #26bfc7;
+    color: #FFF;
+    cursor: pointer;
+    }
+
+    #h1_title {
+        color: #2ad4de;
+        word-spacing: 0.1rem;
+        letter-spacing: 0.05rem;
+        }
+
 /* div holding everything */
-.container {
+#form_container {
     background-color: #FFF;
     padding: 20px;
     border-radius: 10px;
@@ -29,3 +79,20 @@ body {
     border-radius: 10px;
     margin-top: 20px;
 }
+
+.upload-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .upload-btn:hover {
+    background-color: #2980b9;
+  }
+  
+  

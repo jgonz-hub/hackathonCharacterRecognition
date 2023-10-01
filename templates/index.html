@@ -2,17 +2,33 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <title> Character Recognition</title>
         <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles.css') }}">
     </head>
     <body>
         <div id="wrapper">
-            <h1 id="h1_title">Is this Spongebob or Patrick</h1>
-            <form method="POST" enctype="multipart/form-data">
-                <input type="file" name="file" accept=".jpg">
-                <input type="submit" value="Upload">
-            </form>
+            <div id="form_container">
+                <h1 id="h1_title">Is this Spongebob or Patrick</h1>
+                <form method="POST" enctype="multipart/form-data">
+                 <input type="file" name="file" accept=".jpg" >
+                    <input type="submit" name="file" value="submit" >
+                </form>
+                
+            </div>
+
+            <div id="div_pants"> 
+                <div id="div_sbobPants">
+
+                </div>
+                <div id="div_pckShorts">
+
+                </div>    
+            </div>
         </div>
+       
+
       
     </body>
 </html>
