@@ -29,19 +29,17 @@ import cv2 as cv
 import imutils
 import argparse
 
-print("Imported!")
+print("Imported all packages!")
 
+file_names = []
+directory_path = 'hackathonCharacterRecognition/all_images'
+all_files = os.listdir(directory_path)
+suffixes = ('.jpg', '.jpeg')
+for file in all_files:
+    if file.endswith(suffixes):
+        file_names.append(file)
 
-
-# import cv2
-# from google.colab.patches import cv2_imshow
-# file_names = []
-# directory_path = 'hackathon/all_images'
-# all_files = os.listdir(directory_path)
-# suffixes = ('.jpg', '.jpeg')
-# for file in all_files:
-#     if file.endswith(suffixes):
-#         file_names.append(file)
+print(len(file_names))
 
 # sorted_file_names = sorted(file_names)
 # # print(sorted_file_names)
