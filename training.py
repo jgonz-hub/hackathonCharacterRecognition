@@ -9,8 +9,9 @@ Original file is located at
 
 from keras.models import load_model
 import numpy as np
-import cv2 as cv
+import matplotlib.pyplot as plt
 import keras
+from keras import utils
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Conv2D, MaxPooling2D
@@ -25,11 +26,11 @@ import os
 from imutils import paths
 import glob
 import numpy as np
-import cv2 as cv
+import cv2
 import imutils
 import argparse
 
-print("Imported all packages!")
+# print("Imported all packages!")
 
 file_names = []
 directory_path = 'hackathonCharacterRecognition/all_images'
@@ -39,171 +40,125 @@ for file in all_files:
     if file.endswith(suffixes):
         file_names.append(file)
 
-print(len(file_names))
+# print(len(file_names))
+# print(file_names)
 
-# sorted_file_names = sorted(file_names)
-# # print(sorted_file_names)
+sorted_file_names = sorted(file_names)
+# print(sorted_file_names)
 
-# resized_images = []
+resized_images = []
 
-# desired_width = 256
-# desired_height = 256
+desired_width = 256
+desired_height = 256
+# print("/Users/astroworld97/Desktop/hackathon_fresh/hackathonCharacterRecognition/all_images/" + file_names[0])
 
-# # print("/content/drive/MyDrive/hackathon/all_images/" + file_names[0])
+#prints unresized images (=images of different sizes) sorted by filename
+# for i in range(0, len(sorted_file_names)):
+#     image = cv2.imread("/Users/astroworld97/Desktop/hackathon_fresh/hackathonCharacterRecognition/all_images/" + file_names[i])
+#     cv2.imshow('',image)
+#     cv2.waitKey(0)
+for file_path in sorted_file_names:
+    file_path = "/Users/astroworld97/Desktop/hackathon_fresh/hackathonCharacterRecognition/all_images/" + file_path
+    image = cv2.imread(file_path)
+    resized_image = cv2.resize(image, (desired_width, desired_height))
+    resized_images.append(resized_image)
+# print("Images have been resized!")
 
-# # image = cv2.imread("/content/drive/MyDrive/hackathon/all_images/" + file_names[0])
-# # cv2_imshow(image)
+#prints resized images (=images of all the same size) sorted by filename
+# for image in resized_images:
+#     cv2.imshow('',image)
+#     cv2.waitKey(0)
 
-
-# for file_path in sorted_file_names:
-#     file_path = "/content/drive/MyDrive/hackathon/all_images/" + file_path
-#     image = cv2.imread(file_path)
-#     resized_image = cv2.resize(image, (desired_width, desired_height))
-#     resized_images.append(resized_image)
-
-# # image = cv2.imread("/content/drive/MyDrive/hackathon/all_images/" + sorted_file_names[0])
-# # cv2_imshow(image)
-
-# import pandas as pd
-# csv_filename = "/content/drive/MyDrive/hackathon/output/assigned_classes.csv"
-# df = pd.read_csv(csv_filename)
-# sorted_df = df.sort_values(by="img")
+csv_filename = "/Users/astroworld97/Desktop/hackathon_fresh/hackathonCharacterRecognition/assigned_classes.csv"
+df = pd.read_csv(csv_filename)
+sorted_df = df.sort_values(by="img")
 # print(sorted_df)
 
-# classes_list = []
+classes_list = []
+for index, row in sorted_df.iterrows():
+    if row["Spongebob"] == 1:
+        classes_list.append(0)
+    else:
+        classes_list.append(1)
 
-# for index, row in sorted_df.iterrows():
-#     if row["Spongebob"] == 1:
-#         classes_list.append(0)
-#     else:
-#         classes_list.append(1)
+classes_df = pd.DataFrame(classes_list)
+# print(classes_df)
 
-# classes_df = pd.DataFrame(classes_list)
-# classes_df
+arr = np.array(resized_images)
+data_filepath = "/Users/astroworld97/Desktop/hackathon_fresh/hackathonCharacterRecognition/Data.npy"
+np.save(data_filepath, arr)
 
-# import numpy as np
-# arr = np.array(resized_images)
-# # arr.shape
-# data_filepath = "/content/drive/MyDrive/hackathon/Data.npy"
-# np.save(data_filepath, arr)
+Data = np.load(data_filepath)
 
-# Data = np.load(data_filepath)
-# # Data
+X_train, X_test, y_train, y_test = train_test_split(Data/255.,classes_df,test_size=0.1,random_state=0)
 
-# Data.shape
+y_train_cnn = utils.to_categorical(y_train)
+y_test_cnn = utils.to_categorical(y_test)
+num_classes = y_test_cnn.shape[1]
 
-# Data
+X_train_cnn = X_train.reshape(X_train.shape[0], 256,256,3).astype('float32')
+X_test_cnn = X_test.reshape(X_test.shape[0], 256, 256,3).astype('float32')
 
-# classes_df.shape
-
-# # classes = pd.read_csv("/content/drive/MyDrive/hackathon/output/assigned_classes.csv")
-
-# # print(classes.shape)
-
-# # type(classes)
-
-# # classes
-
-# # # Initialize an empty dictionary to store the mapping
-# # image_label_dict = {}
-
-# # # Iterate through each row in the DataFrame
-# # for index, row in classes.iterrows():
-# #     filename = row['filename']
-# #     class0 = row['class0']
-# #     class1 = row['class1']
-
-# #     # Determine the value based on class0 and class1
-# #     if class0 == 1:
-# #         value = 0
-# #     elif class1 == 1:
-# #         value = 1
-# #     else:
-# #         value = None  # Handle cases where both class0 and class1 are 0
-
-# #     # Add the entry to the dictionary
-# #     image_label_dict[filename] = value
-
-# # # Print the resulting dictionary
-# # print(image_label_dict)
-
-# X_train, X_test, y_train, y_test = train_test_split(Data/255.,classes_df,test_size=0.1,random_state=0)
-
-# from keras import utils
-# y_train_cnn = utils.to_categorical(y_train)
-# y_test_cnn = utils.to_categorical(y_test)
-# num_classes = y_test_cnn.shape[1]
-
-# # X_train_cnn = X_train.reshape(X_train.shape[0], 3, 256, 256).astype('float32')
-# # X_test_cnn = X_test.reshape(X_test.shape[0], 3, 256, 256).astype('float32')
-# X_train_cnn = X_train.reshape(X_train.shape[0], 256,256,3).astype('float32')
-# X_test_cnn = X_test.reshape(X_test.shape[0], 256, 256,3).astype('float32')
-
-# X_train_cnn.shape
-
-# X_test_cnn.shape
-
-# def cnn_model():
-#     model = Sequential()
-#     # model.add(Conv2D(32, (3, 3), input_shape=(3, 256, 256), activation = 'relu', data_format="channels_first"))
-#     # model.add(Conv2D(32, (3, 3), input_shape=(256,256,3), data_format="channels_first", activation = 'relu'))
-#     model.add(Conv2D(32, (3, 3), input_shape=(256,256,3), activation = 'relu'))
-#     model.add(Conv2D(32, (3, 3), activation = 'relu'))
-#     model.add(MaxPooling2D(pool_size=(2, 2))) # the CONV CONV POOL structure is popularized in during ImageNet 2014
-#     model.add(Dropout(0.25)) # this thing called dropout is used to prevent overfitting
-#     model.add(Conv2D(64, (3, 3), activation = 'relu'))
-#     model.add(Conv2D(64, (3, 3), activation = 'relu'))
-#     model.add(MaxPooling2D(pool_size=(2, 2)))
-#     model.add(Dropout(0.25))
+def cnn_model():
+    model = Sequential()
+    # model.add(Conv2D(32, (3, 3), input_shape=(3, 256, 256), activation = 'relu', data_format="channels_first"))
+    # model.add(Conv2D(32, (3, 3), input_shape=(256,256,3), data_format="channels_first", activation = 'relu'))
+    model.add(Conv2D(32, (3, 3), input_shape=(256,256,3), activation = 'relu'))
+    model.add(Conv2D(32, (3, 3), activation = 'relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2))) # the CONV CONV POOL structure is popularized in during ImageNet 2014
+    model.add(Dropout(0.25)) # this thing called dropout is used to prevent overfitting
+    model.add(Conv2D(64, (3, 3), activation = 'relu'))
+    model.add(Conv2D(64, (3, 3), activation = 'relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.25))
 
 
-#     model.add(Flatten())
+    model.add(Flatten())
 
 
-#     model.add(Dropout(0.5))
+    model.add(Dropout(0.5))
 
-#     model.add(Dense(2, activation= 'softmax'))
+    model.add(Dense(2, activation= 'softmax'))
 
-#     optimizer = keras.optimizers.Adam()
-#     model.compile(loss='categorical_crossentropy',
-#               optimizer=optimizer,
-#               metrics=['accuracy'])
-#     return model
+    optimizer = keras.optimizers.Adam()
+    model.compile(loss='categorical_crossentropy',
+              optimizer=optimizer,
+              metrics=['accuracy'])
+    return model
 
-# print("[INFO] creating model...")
-# model = cnn_model()
-# # Fit the model
-# print("[INFO] training model...")
-# # X_train_cnn = np.transpose(X_train_cnn, (0, 2, 3, 1))
-# # X_train_cnn = np.transpose(X_train_cnn, (0, 2, 3, 1))
-# # y_train_cnn = np.transpose(y_train_cnn, (0, 2, 3, 1))
-# records = model.fit(X_train_cnn, y_train_cnn, validation_split=0.1, epochs=25, batch_size=16)
-# # Final evaluation of the model
-# print("[INFO] evaluating model...")
-# scores = model.evaluate(X_test_cnn, y_test_cnn, verbose=0)
-# print('Final CNN accuracy: ', scores[1])
+print("[INFO] creating model...")
+model = cnn_model()
+# Fit the model
+print("[INFO] training model...")
+# X_train_cnn = np.transpose(X_train_cnn, (0, 2, 3, 1))
+# X_train_cnn = np.transpose(X_train_cnn, (0, 2, 3, 1))
+# y_train_cnn = np.transpose(y_train_cnn, (0, 2, 3, 1))
+records = model.fit(X_train_cnn, y_train_cnn, validation_split=0.1, epochs=5, batch_size=16)
+# Final evaluation of the model
+print("[INFO] evaluating model...")
+scores = model.evaluate(X_test_cnn, y_test_cnn, verbose=0)
+print('Final CNN accuracy: ', scores[1])
 
-# print("[INFO] saving model...")
-# model.save("model3.h5")
+print("[INFO] saving model...")
+model.save('/Users/astroworld97/Desktop/hackathon_fresh/hackathonCharacterRecognition/my_model.keras')
 
-# import matplotlib.pyplot as plt
-# cnn_probab = model.predict(X_test_cnn, batch_size=32, verbose=0)
+cnn_probab = model.predict(X_test_cnn, batch_size=32, verbose=0)
 
-# # extract the probability for the label that was predicted:
-# p_max = np.amax(cnn_probab, axis=1)
+# extract the probability for the label that was predicted:
+p_max = np.amax(cnn_probab, axis=1)
 
-# plt.hist(p_max, normed=True, bins=list(np.linspace(0,1,11)));
-# plt.xlabel('p of predicted class');
+plt.hist(p_max, density=True, bins=list(np.linspace(0, 1, 11)))
+plt.xlabel('p of predicted class');
 
-# N = 25
-# plt.style.use("ggplot")
-# plt.figure()
-# plt.plot(np.arange(0, N), records.history["loss"], label="train_loss")
-# plt.plot(np.arange(0, N), records.history["val_loss"], label="val_loss")
-# plt.plot(np.arange(0, N), records.history["acc"], label="train_acc")
-# plt.plot(np.arange(0, N), records.history["val_acc"], label="val_acc")
-# plt.title("Training Loss and Accuracy")
-# plt.xlabel("Epoch #")
-# plt.ylabel("Loss/Accuracy")
-# plt.legend(loc="lower left")
-
+N = 5
+plt.style.use("ggplot")
+plt.figure()
+plt.plot(np.arange(0, N), records.history["loss"], label="train_loss")
+plt.plot(np.arange(0, N), records.history["val_loss"], label="val_loss")
+plt.plot(np.arange(0, N), records.history["accuracy"], label="train_accuracy ")
+plt.plot(np.arange(0, N), records.history["val_accuracy"], label="val_accuracy")
+plt.title("Training Loss and Accuracy")
+plt.xlabel("Epoch #")
+plt.ylabel("Loss/Accuracy")
+plt.legend(loc="lower left")
+plt.show()
