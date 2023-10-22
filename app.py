@@ -1,5 +1,8 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
+from tensorflow import keras
+import cv2
+import numpy as np
 
 app = Flask(__name__, static_url_path='/static')
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
@@ -7,10 +10,21 @@ ALLOWED_EXTENSIONS = {'jpg'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+def recognize_character(image_path):
+    model = keras.models.load_model('/Users/astroworld97/Desktop/hackathon_fresher/hackathonCharacterRecognition/my_model.keras')
+    input_image = cv2.imread(input("Please provide path to input image: "))
+    desired_width = 256
+    desired_height = 256
+    resized_image = cv2.resize(input_image, (desired_width, desired_height))
+    resized_image = np.expand_dims(resized_image, axis=0)
+    prediction = model.predict(resized_image)
+    class_labels = ['Spongebob', 'Patrick']
+    predicted_label = [class_labels[i] for i in prediction.argmax(axis=1)]
+    detected_character = predicted_label[0]  # actual predicted string of class
+    return detected_character
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -41,8 +55,8 @@ def index():
 def result(filename):
     # Perform image recognition and character detection here
     # You can pass the detected character as a variable to the template
-    detected_character = "SpongeBob SquarePants"  # Example, replace with actual detection result
-
+    image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    detected_character = recognize_character(image_path)  # Call your recognition code
     return render_template('result.html', filename=filename, detected_character=detected_character)
 
 @app.route('/result_loader/<filename>')
