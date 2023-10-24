@@ -6,22 +6,36 @@ import numpy as np
 
 app = Flask(__name__, static_url_path='/static')
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
-ALLOWED_EXTENSIONS = {'jpg'}
+ALLOWED_EXTENSIONS = {'jpg', 'png', 'gif', 'jpeg'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def recognize_character(image_path):
+    # Load the pre-trained model
     model = keras.models.load_model('/Users/astroworld97/Desktop/hackathon_fresher/hackathonCharacterRecognition/my_model.keras')
+
+    # Load the input image
+    # input_image = cv2.imread(image_path)
     input_image = cv2.imread(input("Please provide path to input image: "))
+    # input_image = cv2.imdecode(np.fromstring(uploaded_file.read(), np.uint8), cv2.IMREAD_COLOR)
+
+    #dimensions for resizing the image to the CNN's input layer's specifications
     desired_width = 256
     desired_height = 256
+
+    # Resize the input image
     resized_image = cv2.resize(input_image, (desired_width, desired_height))
     resized_image = np.expand_dims(resized_image, axis=0)
+
+    # Perform image recognition
     prediction = model.predict(resized_image)
     class_labels = ['Spongebob', 'Patrick']
-    predicted_label = [class_labels[i] for i in prediction.argmax(axis=1)]
-    detected_character = predicted_label[0]  # actual predicted string of class
-    return detected_character
+    
+    # Get the predicted label
+    predicted_label = class_labels[prediction.argmax()]
+
+    return predicted_label
+    
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -31,7 +45,7 @@ def index():
     if request.method == 'POST':
         # Check if a file is uploaded
         if 'file' not in request.files:
-            return redirect(request.url)
+            return redirect(request.url) #used in the Flask framework to redirect the user's browser to the URL specified in the request.url variable
 
         file = request.files['file']
 
@@ -41,7 +55,7 @@ def index():
         if file and allowed_file(file.filename):
             # Save the uploaded file
             filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-            file.save(filename)
+            # file.save(filename)
 
             # Perform image recognition here (not implemented in this example)
 
