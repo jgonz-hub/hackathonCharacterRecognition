@@ -55,6 +55,7 @@ def index():
         if file and allowed_file(file.filename):
             # Save the uploaded file
             filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+            # print(filename)
             # file.save(filename)
 
             # Perform image recognition here (not implemented in this example)
